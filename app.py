@@ -12,7 +12,7 @@ app=Flask(__name__)
 model=pickle.load(open("model.pkl","rb"))
 @app.route("/")
 def Home():
-    return render_template("index456.html")
+    return render_template("index.html")
 @app.route("/predict",methods=["POST"])
 def predict():
     float_features=[x for x in request.form.values()]
