@@ -1,0 +1,49 @@
+*{
+    margin:0;
+    box-sizing: border-box;
+}
+body{
+    background: fixed;
+    background-image: url("stress2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    height: auto;
+}
+
+h1{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-shadow: white;
+
+    
+}
+form{
+    position: fixed;
+    border: 2px solid white;
+    border-radius: 3px;
+    opacity: 0.5px;
+    width: 350px;
+    height: 550px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-left: 480px;
+    
+}
+form input{
+    margin-top:8px;
+    width:250px;
+    height: 35px;
+}
+form button{
+    width:250px;
+    height: 35px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+form button:hover{
+    background-color:white;
+    border-radius:2px ;
+    border-color: white;
+}

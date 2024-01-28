@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Stress Prediction</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="style.css" type="text/css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background-image: url("https://wallpaperaccess.com/full/1969819.jpg");
+
+      font-family: Arial, sans-serif;
+      
+      background-repeat: no-repeat;
+      background-size: cover;
+      overflow: hidden;
+     
+     
+
+
+    }
+
+    .animated-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .form-container {
+      position: fixed;
+      top: 50%;
+     left:20%;
+      transform: translate(-50%, -50%);
+      border:2px solid white;
+      padding: 20px;
+      border-radius: 10px;
+      z-index: 1;
+      padding:20px;
+      width:600px;
+    height:600px;
+    align-items: center;
+    justify-content: center;
+    
+    
+    padding-top:5px;
+    
+   
+    
+    }
+
+    h1 {
+      text-align: center;
+      font-family: 'Courier New', Courier, monospace;
+      color: white;
+      padding-bottom:4px;
+    }
+
+    form {
+      text-align: center;
+      
+    
+    width:600px;
+    height:560px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-top:5px;
+}
+    
+
+  input {
+      padding:3px;
+      margin-bottom: 10px;
+      margin:1px;
+    width: 200px;
+    height:40px;
+    margin-block-start: 10px;
+    position: relative;
+    margin-right: 10px;
+    }
+    label{
+    color:black;
+    width: 200px;
+    padding: 10px;
+    color: rgb(255, 255, 255);
+    justify-content: center;
+    left:4%;
+    margin-bottom: 1px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    display: inline-block;
+
+}
+    button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #0056b3 ;
+      color: white;
+      cursor: pointer;
+      margin:20px;
+      width:200px;
+      height:40px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+      border-radius: 5px;
+    }
+    :after,*:before{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;}
+  .snow_wrap{
+	height: 100vh;
+	width: 100%;
+	background:url("pic.jpg");
+	background-size: cover;
+	background-position: center bottom; 
+	position: relative;
+}
+
+.snow, .snow:before, .snow:after {
+  position: absolute;
+  top: -650px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-image: 
+  radial-gradient(4px 4px at 100px 50px, #fff , transparent), 
+  radial-gradient(6px 6px at 200px 150px, #fff, transparent), 
+  radial-gradient(3px 3px at 300px 250px, #fff 50%, transparent), 
+  radial-gradient(4px 4px at 400px 350px, #fff 50%, transparent), 
+  radial-gradient(6px 6px at 500px 100px, #fff 50%, transparent), 
+  radial-gradient(3px 3px at 50px 200px, #fff 50%, transparent), 
+  radial-gradient(4px 4px at 150px 300px, #fff 50%, transparent), 
+  radial-gradient(6px 6px at 250px 400px, #fff 50%, transparent), 
+  radial-gradient(3px 3px at 350px 500px, #fff 50%, transparent);
+  background-size: 650px 650px;
+  animation: snow 3s linear infinite;
+  content: "";
+}
+h2 {
+        margin-left: 100px;
+        color: white;
+        position: absolute;
+        left:113%;
+        top: 40%;
+        transform: translateY(-130%);
+      }
+.snow:after {
+  margin-left: -250px;
+  opacity: 0.5;
+  filter: blur(2px);
+  animation-duration: 6s;
+  animation-direction: reverse;
+}
+
+.snow:before {
+	margin-left: -350px;
+    opacity: 0.7;
+    filter: blur(1px);
+    animation-duration: 9s;
+    animation-direction: reverse;
+}
+
+@keyframes snow {
+  to {
+    transform: translateY(650px);
+  }
+}
+
+    .tooltip {
+      position: relative;
+      display: inline-block;
+    }
+
+    
+
+    
+
+    .error-message {
+      color: red;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="snow_wrap">
+    <div class="snow" style="color:white;"></div>
+  
+  <div class="form-container">
+    <h1>Stress Prediction</h1>
+
+      
+      <form action="{{ url_for('predict')}}" method="post" onsubmit="return validateForm()">
+        
+
+        <label>Snoring Rate</label>
+        <input type="text" name="Snoring Rate" id="snoringRate" placeholder="Snoring Rate" required="required" pattern="^(47(\.\d+)?|48(\.\d+)?|49(\.\d+)?|[0-9]\d(\.\d+)?|99(\.0)?)$" title="Please enter a number between 47 and 99 (including float values)."
+          onmouseover="displayValidRange('snoringRate', '47 to 99, including float values')"
+          onmouseout="hideValidRange('snoringRate')"/><br>
+        <div class="error-message" id="snoringRateError"></div>
+        <div class="valid-range" id="snoringRateRange"></div>
+
+        <label>Body Temperature</label>
+        <input type="text" name="Body Temperature" id="bodytemparature" placeholder="Body Temperature" required="required" pattern="^(85(\.\d+)?|86(\.\d+)?|87(\.\d+)?|[0-9]\d(\.\d+)?|99(\.0)?)$" title="Please enter a number between 85 and 99 (including float values)."
+          onmouseover="displayValidRange('bodyTemperature', '85 to 99, including float values')"
+          onmouseout="hideValidRange('bodyTemperature')"/><br>
+        <div class="error-message" id="bodyTemperatureError"></div>
+        <div class="valid-range" id="bodyTemperatureRange"></div>
+
+        <label>Blood Oxygen</label>
+        <input type="text" name="Blood Oxygen" id="bloodOxygen" placeholder="Blood Oxygen" required="required" pattern="^(82(\.\d+)?|83(\.\d+)?|84(\.\d+)?|[0-9]\d(\.\d+)?|97(\.0)?)$" title="Please enter a number between 82 and 97 (including float values)."
+          onmouseover="displayValidRange('bloodOxygen', '82 to 97, including float values')"
+          onmouseout="hideValidRange('bloodOxygen')"/><br>
+        <div class="error-message" id="bloodOxygenError"></div>
+        <div class="valid-range" id="bloodOxygenRange"></div>
+
+        <label>Respiration Rate</label>
+        <input type="text" name="Respiration Rate" id="respirationRate" placeholder="Respiration Rate" required="required" pattern="^(1[6-9](\.\d+)?|2[0-9](\.\d+)?|29(\.0)?)$" title="Please enter a number between 16 and 29 (including float values)."
+          onmouseover="displayValidRange('respirationRate', '16 to 29, including float values')"
+          onmouseout="hideValidRange('respirationRate')"/><br>
+        <div class="error-message" id="respirationRateError"></div>
+        <div class="valid-range" id="respirationRateRange"></div>
+
+       <label>Sleeping Hours</label>
+        <input type="text" name="Sleeping Hours" id="sleepingHours" placeholder="Sleeping Hours" required="required" pattern="^(?:[0-9](?:\.\d+)?|\.\d+)$"
+        title="Please enter a number between 0 and 9 (including float values)."
+          onmouseover="displayValidRange('sleepingHours', '0 to 9, including float values')"
+          onmouseout="hideValidRange('sleepingHours')"/><br>
+        <div class="error-message" id="sleepingHoursError"></div>
+        <div class="valid-range" id="sleepingHoursRange"></div>
+
+        <label>Heart Rate</label>
+        <input type="text" name="Heart Rate" id="heartRate" placeholder="Heart Rate" required="required" pattern="^(50(\.\d+)?|51(\.\d+)?|52(\.\d+)?|[0-9]\d(\.\d+)?|84(\.0)?)$" title="Please enter a number between 50 and 84 (including float values)."
+          onmouseover="displayValidRange('heartRate', '50 to 84, including float values')"
+          onmouseout="hideValidRange('heartRate')"/><br>
+        <div class="error-message" id="heartRateError"></div>
+        <div class="valid-range" id="heartRateRange"></div>
+
+          <label>Headache</label>
+          <input type="text" name="Headache" id="headAche" placeholder="Headache" required="required" pattern="^[01]$" title="Please enter 0(No) or 1(Yes)."
+            onmouseover="displayValidRange('headAche', 'Only 0 or 1')"
+            onmouseout="hideValidRange('headAche')"/><br>
+          <div class="error-message" id="headAcheError"></div>
+          <div class="valid-range" id="headAcheRange"></div>
+
+          <label>Working Hours</label>
+        <input type="text" name="Working Hours" id="workingHours" placeholder="Working Hours" required="required" pattern="^(?:[4-9]|1[0-2])$" title="Please enter the values between 4 and 15(without float values)"
+          onmouseover="displayValidRange('workingHours', '4 to 15 without float values')"
+          onmouseout="hideValidRange('workingHours')"/><br>
+        <div class="error-message" id="workingHoursError"></div>
+        <div class="valid-range" id="workingHoursRange"></div>
+        <button type="submit" name='button' target="index456.html">Check your Level</button>
+        
+      </form>
+      <br>
+      <br>
+      <h2 style="position: absolute;">{{ prediction_text }}</h2>
+      
+  
+      
+  </div>
+
+  <script src="//code.tidio.co/4yzyk7vfal8uvcpc9vceblbinc53efy7.js"></script>
+  <script>
+    function validateForm() {
+      var snoringRate = document.getElementById("snoringRate").value;
+      var bodyTemperature = document.getElementById("bodyTemperature").value;
+      var bloodOxygen = document.getElementById("bloodOxygen").value;
+      var respirationRate = document.getElementById("respirationRate").value;
+      var sleepingHours = document.getElementById("sleepingHours").value;
+      var heartRate = document.getElementById("heartRate").value;
+      var headache = document.getElementById("headAche").value;
+      var workingHours = document.getElementById("workingHours").value;
+
+      var valid = true;
+
+      // Validation rules
+      if (!/^(47(\.\d+)?|48(\.\d+)?|49(\.\d+)?|[5-8]\d(\.\d+)?|99(\.0)?)$/.test(snoringRate)) {
+        document.getElementById("snoringRateError").innerHTML = "Please enter a valid Snoring Rate between 47 and 99 (including float values).";
+        valid = false;
+      } else {
+        document.getElementById("snoringRateError").innerHTML = "";
+      }
+      if (!/^(85(\.\d+)?|86(\.\d+)?|87(\.\d+)?|[5-8]\d(\.\d+)?|99(\.0)?)$/.test(bodyTemperature)) {
+        document.getElementById("bodyTemperatureError").innerHTML = "Please enter a valid Body Temperature between 85 and 99 (including float values).";
+        valid = false;
+      } else {
+        document.getElementById("bodyTemperatureError").innerHTML = "";
+      }
+      if (!/^(82(\.\d+)?|83(\.\d+)?|84(\.\d+)?|[5-8]\d(\.\d+)?|97(\.0)?)$/.test(bloodOxygen)) {
+        document.getElementById("bloodOxygenError").innerHTML = "Please enter a valid Blood Oxygen between 82 and 97 (including float values).";
+        valid = false;
+      } else {
+        document.getElementById("bloodOxygenError").innerHTML = "";
+      }
+      if (!/^(1[6-9](\.\d+)?|2[0-9](\.\d+)?|29(\.0)?)$/.test(respirationRate)) {
+        document.getElementById("respirationRateError").innerHTML = "Please enter a valid Respiration Rate between 82 and 97 (including float values).";
+        valid = false;
+      } else {
+        document.getElementById("respirationRateError").innerHTML = "";
+      }
+      if (!/^(?:[0-9](?:\.\d+)?|\.\d+)$/.test(sleepingHours)) {
+        document.getElementById("sleepingHoursError").innerHTML = "Please enter a valid Sleeping Hours between 0 and 9 (including float values).";
+        valid = false;
+      } else {
+        document.getElementById("sleepingHoursError").innerHTML = "";
+      }
+      if (!/^(50(\.\d+)?|51(\.\d+)?|52(\.\d+)?|[5-8]\d(\.\d+)?|84(\.0)?)$/.test(heartRate)) {
+        document.getElementById("heartRateError").innerHTML = "Please enter a valid Heart Rate between 50 and 84 (including float values).";
+        valid = false;
+      } else {
+        document.getElementById("heartRateError").innerHTML = "";
+      }
+      if (!/^[01])$/.test(headAche)) {
+        document.getElementById("headAcheError").innerHTML = "Please enter only 0 or 1(Yes-1 , No-0)";
+        valid = false;
+      } else {
+        document.getElementById("headAcheError").innerHTML = "";
+      }
+      if (!/^(?:[4-9]|1[0-2])$/.test(workingHours)) {
+        document.getElementById("workingHoursError").innerHTML = "Please enter valid Working Hours between 4 and 15 (without decimal values).";
+        valid = false;
+      } else {
+        document.getElementById("workingHoursError").innerHTML = "";
+      }
+      
+
+
+      
+
+
+      
+
+      return valid;
+    }
+  </script>
+
+
+</body>
+</html>
